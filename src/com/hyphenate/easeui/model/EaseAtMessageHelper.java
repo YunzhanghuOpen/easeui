@@ -1,12 +1,19 @@
 package com.hyphenate.easeui.model;
 
 import android.text.TextUtils;
+
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessage.ChatType;
 import com.hyphenate.easeui.EaseConstant;
+import com.hyphenate.easeui.R;
+import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseUserUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -32,7 +39,7 @@ public class EaseAtMessageHelper {
     }
     
     /**
-     * 添加@人的用户id
+     * add user you want to @
      * @param username
      */
     public void addAtUser(String username){
@@ -45,7 +52,7 @@ public class EaseAtMessageHelper {
     }
     
     /**
-     * 判断消息内容是否包含@人
+     * check if be mentioned(@) in the content
      * @param content
      * @return
      */
@@ -66,9 +73,17 @@ public class EaseAtMessageHelper {
         }
         return false;
     }
+
+    public boolean containsAtAll(String content){
+        String atAll = "@" + EaseUI.getInstance().getContext().getString(R.string.all_members);
+        if(content.contains(atAll)){
+            return true;
+        }
+        return false;
+    }
     
     /**
-     * 获取消息内容包含的@人的id list,发送的时候使用此方法
+     * get the users be mentioned(@) 
      * @param content
      * @return
      */
@@ -95,7 +110,7 @@ public class EaseAtMessageHelper {
     }
     
     /**
-     * 解析消息，如果有at me的消息，获取其group并存储group id
+     * parse the message, get and save group id if I was mentioned(@)
      * @param messages
      */
     public void parseMessages(List<EMMessage> messages) {
@@ -106,13 +121,24 @@ public class EaseAtMessageHelper {
                 String groupId = msg.getTo();
                 String usernameStr = msg.getStringAttribute(EaseConstant.MESSAGE_ATTR_AT_MSG, null);
                 if(usernameStr != null){
-                    String[] usernames = usernameStr.split(",");
-                    for(String username : usernames){
-                        if(EMClient.getInstance().getCurrentUser().equals(username)){
-                            if(!atMeGroupList.contains(groupId)){
-                                atMeGroupList.add(groupId);
-                                break;
+                    if(usernameStr.equals(EaseConstant.MESSAGE_ATTR_VALUE_AT_MSG_ALL)){
+                        if(!atMeGroupList.contains(groupId)){
+                            atMeGroupList.add(groupId);
+                        }
+                    }else{
+                        try {
+                            JSONArray jsonArray = new JSONArray(usernameStr);
+                            for(int i = 0; i < jsonArray.length(); i++){
+                                String username = jsonArray.getString(i);
+                                if(EMClient.getInstance().getCurrentUser().equals(username)){
+                                    if(!atMeGroupList.contains(groupId)){
+                                        atMeGroupList.add(groupId);
+                                        break;
+                                    }
+                                }
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     }
                     if(atMeGroupList.size() != size){
@@ -124,7 +150,7 @@ public class EaseAtMessageHelper {
     }
     
     /**
-     * 获取包含at me的groups
+     * get groups which I was mentioned
      * @return
      */
     public Set<String> getAtMeGroups(){
@@ -132,7 +158,7 @@ public class EaseAtMessageHelper {
     }
     
     /**
-     * 从at me groups中移除此group
+     * remove group from the list
      * @param groupId
      */
     public void removeAtMeGroup(String groupId){
@@ -143,7 +169,7 @@ public class EaseAtMessageHelper {
     }
     
     /**
-     * 此group中是否包含at me的消息
+     * check if the input groupId in atMeGroupList
      * @param groupId
      * @return
      */
@@ -156,11 +182,16 @@ public class EaseAtMessageHelper {
         if(user != null){
             String atUsername = message.getStringAttribute(EaseConstant.MESSAGE_ATTR_AT_MSG, null);
             if(atUsername != null){
-                String[] atUsernames = atUsername.split(",");
-                for(String username : atUsernames){
-                    if(username.equals(EMClient.getInstance().getCurrentUser())){
-                        return true;
+                try {
+                    JSONArray jsonArray = new JSONArray(atUsername);
+                    for(int i = 0; i < jsonArray.length(); i++){
+                        String username = jsonArray.getString(i);
+                        if(username.equals(EMClient.getInstance().getCurrentUser())){
+                            return true;
+                        }
                     }
+                } catch (JSONException e) {
+                    return  false;
                 }
             }
             
@@ -169,15 +200,18 @@ public class EaseAtMessageHelper {
     }
     
     public String atListToString(List<String> atList){
-        StringBuffer sb = new StringBuffer();
+        JSONArray jArray = new JSONArray();
         int size = atList.size();
         for(int i = 0; i < size; i++){
             String username = atList.get(i);
-            sb.append(username);
-            if(i != size-1){
-                sb.append(",");
-            }
+            jArray.put(username);
         }
-        return sb.toString();
+        return jArray.toString();
+    }
+
+    public void cleanToAtUserList(){
+        synchronized (toAtUserList){
+            toAtUserList.clear();
+        }
     }
 }
