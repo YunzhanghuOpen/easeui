@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
-def globalConfiguration = rootProject.extensions.getByName("ext")
+
 android {
-    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
-    buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
+    compileSdkVersion androidCompileSdkVersion
+    buildToolsVersion androidBuildToolsVersion
 
     defaultConfig {
-        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
-        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+        minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidTargetSdkVersion
     }
 	
 	sourceSets {
@@ -43,7 +43,6 @@ android {
 }
 
 dependencies {
-    def presentationDependencies = rootProject.ext.presentationDependencies
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile presentationDependencies.supportV4
 }
