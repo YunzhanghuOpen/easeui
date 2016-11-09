@@ -19,7 +19,6 @@ import com.hyphenate.easeui.R;
 
 /**
  * primary menu
- *
  */
 public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnClickListener {
     private EditText editText;
@@ -60,7 +59,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
         RelativeLayout faceLayout = (RelativeLayout) findViewById(R.id.rl_face);
         buttonMore = (Button) findViewById(R.id.btn_more);
         edittext_layout.setBackgroundResource(R.drawable.ease_input_bar_bg_normal);
-        
+
         buttonSend.setOnClickListener(this);
         buttonSetModeKeyboard.setOnClickListener(this);
         buttonSetModeVoice.setOnClickListener(this);
@@ -68,7 +67,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
         faceLayout.setOnClickListener(this);
         editText.setOnClickListener(this);
         editText.requestFocus();
-        
+
         editText.setOnFocusChangeListener(new OnFocusChangeListener() {
 
             @Override
@@ -104,55 +103,58 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
 
             }
         });
-        
-        
+
+
         buttonPressToSpeak.setOnTouchListener(new OnTouchListener() {
-            
-            @Override 
+
+            @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(listener != null){
+                if (listener != null) {
                     return listener.onPressToSpeakBtnTouch(v, event);
                 }
                 return false;
             }
         });
     }
-    
+
     /**
      * set recorder view when speak icon is touched
+     *
      * @param voiceRecorderView
      */
-    public void setPressToSpeakRecorderView(EaseVoiceRecorderView voiceRecorderView){
+    public void setPressToSpeakRecorderView(EaseVoiceRecorderView voiceRecorderView) {
         EaseVoiceRecorderView voiceRecorderView1 = voiceRecorderView;
     }
 
     /**
      * append emoji icon to editText
+     *
      * @param emojiContent
      */
-    public void onEmojiconInputEvent(CharSequence emojiContent){
+    public void onEmojiconInputEvent(CharSequence emojiContent) {
         editText.append(emojiContent);
     }
-    
+
     /**
      * delete emojicon
      */
-    public void onEmojiconDeleteEvent(){
+    public void onEmojiconDeleteEvent() {
         if (!TextUtils.isEmpty(editText.getText())) {
             KeyEvent event = new KeyEvent(0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0, 0, KeyEvent.KEYCODE_ENDCALL);
             editText.dispatchKeyEvent(event);
         }
     }
-    
+
     /**
      * on clicked event
+     *
      * @param view
      */
     @Override
-    public void onClick(View view){
+    public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.btn_send) {
-            if(listener != null){
+            if (listener != null) {
                 String s = editText.getText().toString();
                 editText.setText("");
                 listener.onSendBtnClicked(s);
@@ -160,12 +162,12 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
         } else if (id == R.id.btn_set_mode_voice) {
             setModeVoice();
             showNormalFaceImage();
-            if(listener != null)
+            if (listener != null)
                 listener.onToggleVoiceBtnClicked();
         } else if (id == R.id.btn_set_mode_keyboard) {
             setModeKeyboard();
             showNormalFaceImage();
-            if(listener != null)
+            if (listener != null)
                 listener.onToggleVoiceBtnClicked();
         } else if (id == R.id.btn_more) {
             buttonSetModeVoice.setVisibility(View.VISIBLE);
@@ -173,27 +175,26 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
             edittext_layout.setVisibility(View.VISIBLE);
             buttonPressToSpeak.setVisibility(View.GONE);
             showNormalFaceImage();
-            if(listener != null)
+            if (listener != null)
                 listener.onToggleExtendClicked();
         } else if (id == R.id.et_sendmessage) {
             edittext_layout.setBackgroundResource(R.drawable.ease_input_bar_bg_active);
             faceNormal.setVisibility(View.VISIBLE);
             faceChecked.setVisibility(View.INVISIBLE);
-            if(listener != null)
+            if (listener != null)
                 listener.onEditTextClicked();
         } else if (id == R.id.rl_face) {
             toggleFaceImage();
-            if(listener != null){
+            if (listener != null) {
                 listener.onToggleEmojiconClicked();
             }
         } else {
         }
     }
-    
-    
+
+
     /**
      * show voice icon when speak bar is touched
-     * 
      */
     protected void setModeVoice() {
         hideKeyboard();
@@ -228,26 +229,26 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
         }
 
     }
-    
-    
-    protected void toggleFaceImage(){
-        if(faceNormal.getVisibility() == View.VISIBLE){
+
+
+    protected void toggleFaceImage() {
+        if (faceNormal.getVisibility() == View.VISIBLE) {
             showSelectedFaceImage();
-        }else{
+        } else {
             showNormalFaceImage();
         }
     }
-    
-    private void showNormalFaceImage(){
+
+    private void showNormalFaceImage() {
         faceNormal.setVisibility(View.VISIBLE);
         faceChecked.setVisibility(View.INVISIBLE);
     }
-    
-    private void showSelectedFaceImage(){
+
+    private void showSelectedFaceImage() {
         faceNormal.setVisibility(View.INVISIBLE);
         faceChecked.setVisibility(View.VISIBLE);
     }
-    
+
 
     @Override
     public void onExtendMenuContainerHide() {
@@ -256,10 +257,10 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
 
     @Override
     public void onTextInsert(CharSequence text) {
-       int start = editText.getSelectionStart();
-       Editable editable = editText.getEditableText();
-       editable.insert(start, text);
-       setModeKeyboard();
+        int start = editText.getSelectionStart();
+        Editable editable = editText.getEditableText();
+        editable.insert(start, text);
+        setModeKeyboard();
     }
 
     @Override

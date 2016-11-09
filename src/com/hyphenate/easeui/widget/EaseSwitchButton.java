@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import com.hyphenate.easeui.R;
 
-public class EaseSwitchButton extends FrameLayout{
+public class EaseSwitchButton extends FrameLayout {
 
     private ImageView openImage;
     private ImageView closeImage;
@@ -23,46 +23,46 @@ public class EaseSwitchButton extends FrameLayout{
     public EaseSwitchButton(Context context) {
         this(context, null);
     }
-    
+
     public EaseSwitchButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-        
+
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.EaseSwitchButton);
         Drawable openDrawable = ta.getDrawable(R.styleable.EaseSwitchButton_switchOpenImage);
         Drawable closeDrawable = ta.getDrawable(R.styleable.EaseSwitchButton_switchCloseImage);
         int switchStatus = ta.getInt(R.styleable.EaseSwitchButton_switchStatus, 0);
         ta.recycle();
-        
+
         LayoutInflater.from(context).inflate(R.layout.ease_widget_switch_button, this);
         openImage = (ImageView) findViewById(R.id.iv_switch_open);
         closeImage = (ImageView) findViewById(R.id.iv_switch_close);
-        if(openDrawable != null){
+        if (openDrawable != null) {
             openImage.setImageDrawable(openDrawable);
         }
-        if(closeDrawable != null){
+        if (closeDrawable != null) {
             closeImage.setImageDrawable(closeDrawable);
         }
-        if(switchStatus == 1){
+        if (switchStatus == 1) {
             closeSwitch();
         }
-        
+
     }
-    
+
     /**
      * is switch open
      */
-    public boolean isSwitchOpen(){
+    public boolean isSwitchOpen() {
         return openImage.getVisibility() == View.VISIBLE;
     }
 
-    public void openSwitch(){
-    	openImage.setVisibility(View.VISIBLE);
-    	closeImage.setVisibility(View.INVISIBLE);
+    public void openSwitch() {
+        openImage.setVisibility(View.VISIBLE);
+        closeImage.setVisibility(View.INVISIBLE);
     }
-    
-    public void closeSwitch(){
-    	openImage.setVisibility(View.INVISIBLE);
-    	closeImage.setVisibility(View.VISIBLE);
+
+    public void closeSwitch() {
+        openImage.setVisibility(View.INVISIBLE);
+        closeImage.setVisibility(View.VISIBLE);
     }
-    
+
 }

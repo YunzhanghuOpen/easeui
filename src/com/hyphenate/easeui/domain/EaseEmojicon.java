@@ -1,76 +1,79 @@
 package com.hyphenate.easeui.domain;
 
 public class EaseEmojicon {
-    public EaseEmojicon(){
+    public EaseEmojicon() {
     }
-    
+
     /**
      * constructor
-     * @param icon- resource id of the icon
+     *
+     * @param icon-      resource id of the icon
      * @param emojiText- text of emoji icon
      */
-    public EaseEmojicon(int icon, String emojiText){
+    public EaseEmojicon(int icon, String emojiText) {
         this.icon = icon;
         this.emojiText = emojiText;
         this.type = Type.NORMAL;
     }
-    
+
     /**
      * constructor
-     * @param icon - resource id of the icon
+     *
+     * @param icon      - resource id of the icon
      * @param emojiText - text of emoji icon
-     * @param type - normal or big
+     * @param type      - normal or big
      */
-    public EaseEmojicon(int icon, String emojiText, Type type){
+    public EaseEmojicon(int icon, String emojiText, Type type) {
         this.icon = icon;
         this.emojiText = emojiText;
         this.type = type;
     }
-    
-    
+
+
     /**
      * identity code
      */
     private String identityCode;
-    
+
     /**
      * static icon resource id
      */
     private int icon;
-    
+
     /**
      * dynamic icon resource id
      */
     private int bigIcon;
-    
+
     /**
      * text of emoji, could be null for big icon
      */
     private String emojiText;
-    
+
     /**
      * name of emoji icon
      */
     private String name;
-    
+
     /**
      * normal or big
      */
     private Type type;
-    
+
     /**
      * path of icon
      */
     private String iconPath;
-    
+
     /**
      * path of big icon
      */
     private String bigIconPath;
-    
-    
+
+
     /**
      * get the resource id of the icon
+     *
      * @return
      */
     public int getIcon() {
@@ -80,6 +83,7 @@ public class EaseEmojicon {
 
     /**
      * set the resource id of the icon
+     *
      * @param icon
      */
     public void setIcon(int icon) {
@@ -89,6 +93,7 @@ public class EaseEmojicon {
 
     /**
      * get the resource id of the big icon
+     *
      * @return
      */
     public int getBigIcon() {
@@ -98,6 +103,7 @@ public class EaseEmojicon {
 
     /**
      * set the resource id of the big icon
+     *
      * @return
      */
     public void setBigIcon(int dynamicIcon) {
@@ -107,6 +113,7 @@ public class EaseEmojicon {
 
     /**
      * get text of emoji icon
+     *
      * @return
      */
     public String getEmojiText() {
@@ -116,6 +123,7 @@ public class EaseEmojicon {
 
     /**
      * set text of emoji icon
+     *
      * @param emojiText
      */
     public void setEmojiText(String emojiText) {
@@ -124,14 +132,16 @@ public class EaseEmojicon {
 
     /**
      * get name of emoji icon
+     *
      * @return
      */
     public String getName() {
         return name;
     }
-    
+
     /**
      * set name of emoji icon
+     *
      * @param name
      */
     public void setName(String name) {
@@ -140,6 +150,7 @@ public class EaseEmojicon {
 
     /**
      * get type
+     *
      * @return
      */
     public Type getType() {
@@ -149,6 +160,7 @@ public class EaseEmojicon {
 
     /**
      * set type
+     *
      * @param type
      */
     public void setType(Type type) {
@@ -158,6 +170,7 @@ public class EaseEmojicon {
 
     /**
      * get icon path
+     *
      * @return
      */
     public String getIconPath() {
@@ -167,6 +180,7 @@ public class EaseEmojicon {
 
     /**
      * set icon path
+     *
      * @param iconPath
      */
     public void setIconPath(String iconPath) {
@@ -176,6 +190,7 @@ public class EaseEmojicon {
 
     /**
      * get path of big icon
+     *
      * @return
      */
     public String getBigIconPath() {
@@ -185,6 +200,7 @@ public class EaseEmojicon {
 
     /**
      * set path of big icon
+     *
      * @param bigIconPath
      */
     public void setBigIconPath(String bigIconPath) {
@@ -193,14 +209,16 @@ public class EaseEmojicon {
 
     /**
      * get identity code
+     *
      * @return
      */
     public String getIdentityCode() {
         return identityCode;
     }
-    
+
     /**
      * set identity code
+     *
      * @param identityId
      */
     public void setIdentityCode(String identityCode) {
@@ -216,8 +234,7 @@ public class EaseEmojicon {
     }
 
 
-
-    public enum Type{
+    public enum Type {
         /**
          * normal icon, can be input one or more in edit view
          */

@@ -240,7 +240,6 @@ public class EaseImageView extends ImageView {
     }
 
     /**
-     *
      * @param drawable
      * @return
      */
