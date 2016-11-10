@@ -1,20 +1,5 @@
 package com.hyphenate.easeui.ui;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-
-import com.hyphenate.EMConnectionListener;
-import com.hyphenate.EMConversationListener;
-import com.hyphenate.EMError;
-import com.hyphenate.chat.EMChatManager;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMConversation;
-import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.widget.EaseConversationList;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,8 +20,22 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
+import com.hyphenate.EMConnectionListener;
+import com.hyphenate.EMConversationListener;
+import com.hyphenate.EMError;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMConversation;
+import com.hyphenate.easeui.R;
+import com.hyphenate.easeui.widget.EaseConversationList;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+
 /**
- * conversation fragment
+ * conversation list fragment
  *
  */
 public class EaseConversationListFragment extends EaseBaseFragment{
@@ -138,7 +137,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
         
         @Override
         public void onDisconnected(int error) {
-            if (error == EMError.USER_REMOVED || error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
+            if (error == EMError.USER_REMOVED || error == EMError.USER_LOGIN_ANOTHER_DEVICE || error == EMError.SERVER_SERVICE_RESTRICTED) {
                 isConflict = true;
             } else {
                handler.sendEmptyMessage(0);
@@ -242,9 +241,9 @@ public class EaseConversationListFragment extends EaseBaseFragment{
             @Override
             public int compare(final Pair<Long, EMConversation> con1, final Pair<Long, EMConversation> con2) {
 
-                if (con1.first == con2.first) {
+                if (con1.first.equals(con2.first)) {
                     return 0;
-                } else if (con2.first > con1.first) {
+                } else if (con2.first.longValue() > con1.first.longValue()) {
                     return 1;
                 } else {
                     return -1;
