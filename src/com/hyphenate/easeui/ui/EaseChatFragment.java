@@ -581,13 +581,17 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     }
 
     @Override
-    public void onMessageRead(List<EMMessage> list) {
-
+    public void onMessageRead(List<EMMessage> messages) {
+        if(isMessageListInited) {
+            messageList.refresh();
+        }
     }
 
     @Override
-    public void onMessageDelivered(List<EMMessage> list) {
-
+    public void onMessageDelivered(List<EMMessage> messages) {
+        if(isMessageListInited) {
+            messageList.refresh();
+        }
     }
 
     @Override
