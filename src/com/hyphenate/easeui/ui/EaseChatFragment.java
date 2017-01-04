@@ -527,11 +527,11 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             }
 
             @Override
-            public void onMemberKicked(String roomId, String roomName, String participant) {
+            public void onRemovedFromChatRoom(String roomId, String roomName, String participant) {
                 if (roomId.equals(toChatUsername)) {
                     String curUser = EMClient.getInstance().getCurrentUser();
                     if (curUser.equals(participant)) {
-                    	EMClient.getInstance().chatroomManager().leaveChatRoom(toChatUsername);
+                        EMClient.getInstance().chatroomManager().leaveChatRoom(toChatUsername);
                         getActivity().finish();
                     }else{
                         showChatroomToast("member : " + participant + " was kicked from the room : " + roomId + " room name : " + roomName);
@@ -581,17 +581,13 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     }
 
     @Override
-    public void onMessageReadAckReceived(List<EMMessage> messages) {
-        if(isMessageListInited) {
-            messageList.refresh();
-        }
+    public void onMessageRead(List<EMMessage> list) {
+
     }
 
     @Override
-    public void onMessageDeliveryAckReceived(List<EMMessage> messages) {
-        if(isMessageListInited) {
-            messageList.refresh();
-        }
+    public void onMessageDelivered(List<EMMessage> list) {
+
     }
 
     @Override
@@ -966,6 +962,21 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
      * 
      */
     class GroupListener extends EaseGroupRemoveListener {
+
+        @Override
+        public void onRequestToJoinReceived(String s, String s1, String s2, String s3) {
+
+        }
+
+        @Override
+        public void onRequestToJoinAccepted(String s, String s1, String s2) {
+
+        }
+
+        @Override
+        public void onRequestToJoinDeclined(String s, String s1, String s2, String s3) {
+
+        }
 
         @Override
         public void onUserRemoved(final String groupId, String groupName) {
