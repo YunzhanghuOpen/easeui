@@ -15,7 +15,6 @@ import com.hyphenate.easeui.utils.EaseSmileUtils;
 
 import java.util.List;
 
-import static com.bumptech.glide.request.RequestOptions.placeholderOf;
 
 public class EmojiconGridAdapter extends ArrayAdapter<EaseEmojicon> {
 
@@ -52,7 +51,7 @@ public class EmojiconGridAdapter extends ArrayAdapter<EaseEmojicon> {
             } else if (emojicon.getIconPath() != null) {
                 Glide.with(getContext())
                         .load(emojicon.getIconPath())
-                        .apply(placeholderOf(R.drawable.ease_default_expression))
+                        .placeholder(R.drawable.ease_default_expression)
                         .into(imageView);
             }
         }

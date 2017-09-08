@@ -12,7 +12,6 @@ import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.domain.EaseEmojicon;
 
-import static com.bumptech.glide.request.RequestOptions.placeholderOf;
 
 /**
  * big emoji icons
@@ -50,12 +49,12 @@ public class EaseChatRowBigExpression extends EaseChatRowText {
             if (emojicon.getBigIcon() != 0) {
                 Glide.with(activity)
                         .load(emojicon.getBigIcon())
-                        .apply(placeholderOf(R.drawable.ease_default_expression))
+                        .placeholder(R.drawable.ease_default_expression)
                         .into(imageView);
             } else if (emojicon.getBigIconPath() != null) {
                 Glide.with(activity)
                         .load(emojicon.getBigIconPath())
-                        .apply(placeholderOf(R.drawable.ease_default_expression))
+                        .placeholder(R.drawable.ease_default_expression)
                         .into(imageView);
             } else {
                 imageView.setImageResource(R.drawable.ease_default_expression);

@@ -11,7 +11,6 @@ import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.controller.EaseUI.EaseUserProfileProvider;
 import com.hyphenate.easeui.domain.EaseUser;
 
-import static com.bumptech.glide.request.RequestOptions.placeholderOf;
 
 public class EaseUserUtils {
 
@@ -49,7 +48,7 @@ public class EaseUserUtils {
                 //use default avatar
                 Glide.with(context)
                         .load(user.getAvatar())
-                        .apply(placeholderOf(R.drawable.ease_default_avatar).diskCacheStrategy(DiskCacheStrategy.ALL))
+                        .placeholder(R.drawable.ease_default_avatar).diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(imageView);
             }
         } else {
